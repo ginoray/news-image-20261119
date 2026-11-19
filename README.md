@@ -4,11 +4,15 @@
 [![rank](https://make.fun/badge/news-image-20261119/ginoray/news-image-20261119/rank.svg)](https://make.fun/bounty/news-image-20261119/leaderboard?utm_source=github&utm_medium=readme&utm_campaign=news-image-20261119)
 [![reward](https://make.fun/badge/news-image-20261119/ginoray/news-image-20261119/reward.svg)](https://make.fun/bounty/news-image-20261119?utm_source=github&utm_medium=readme&utm_campaign=news-image-20261119)
 
-One picture that sums up the world's news of **Thursday, 19 November 2026**: the first-ever Xi–Trump–Putin trilateral summit in Shenzhen as the lead story; a GTA VI launch-day feature (Metacritic 99, a 2.5-million-viewer Twitch record inside 30 minutes, an estimated $1.45bn in pre-orders); twelve cards — the World Court's Rohingya genocide judgment, the record $190.4m Van Gogh sale, Anthropic's IPO pricing, Nvidia's record quarter and falling shares, a 19-month dollar high, the third Crimean Bridge attack of the week, Jeffries set to be the first Black US House Speaker, Voyager 1 at one light-day, the EU–Indonesia trade pact, Israel's coalition deadline, the Riyadh missile alert, and the India–Japan 2+2 dialogue — plus a UTC timeline of the day and an "also today" strip. Every story was cross-checked against at least two independent reports published that day.
+**The World Today — Thursday, 19 November 2026**, drawn as a single 1024×1024 newspaper poster. The lead story is the first time the presidents of China, the United States and Russia have ever sat down together: Xi Jinping hosted Donald Trump and Vladimir Putin in Shenzhen during the APEC leaders' meeting. Beneath it, a feature band marks GTA VI's launch day with the numbers that defined it — a 99/100 Metacritic score, 2.5 million Twitch viewers inside half an hour, an estimated $1.45 billion of pre-orders. Twelve short cards carry the rest of the day: the World Court's judgment in the Rohingya genocide case, a record $190.4 million Van Gogh sale, Anthropic's IPO pricing, Nvidia's record quarter and falling shares, a 19-month high for the dollar, the week's third attack on the Crimean Bridge, Jeffries in line to become the first Black Speaker of the US House, Voyager 1 reaching one light-day from Earth, the EU–Indonesia trade pact, Israel's coalition deadline, Riyadh's missile alert and all-clear, and the India–Japan 2+2 dialogue. A UTC timeline and an also-today strip close the page. No story appears unless two or more independent reports from that day agree on it.
 
-The program decodes the poster (kept base64-encoded in `assets/entry.png.b64`, so the repository stays plain text end to end), validates it against the bounty's limits (a whole PNG, ≤ 1 MiB, ≤ 1024×1024) and writes it, byte for byte, to `/output/entry.png`. The poster is rendered by `tools/build_image.py` (Pillow), which is kept in the repo so the picture can be rebuilt and audited; the shipped program itself uses only the Python standard library and no network.
+## How it works
 
-## Run it
+`main.py` is the whole entry. It decodes the poster from `assets/entry.png.b64` — base64, so every file in this repository is plain text — walks the PNG chunk by chunk verifying each checksum, confirms the size limits (≤ 1 MiB, ≤ 1024×1024, IEND last), and writes the verified bytes to `/output/entry.png` (or `$MAKEFUN_OUTPUT_DIR`). Nothing but the Python standard library, no network, identical output on every run.
+
+`tools/build_image.py` is the renderer that produced the poster with Pillow; it stays in the repository so anyone can rebuild the picture and audit exactly what it shows.
+
+## Running it
 
 ```sh
 python3 main.py
